@@ -1,0 +1,46 @@
+#config.yml
+
+# Binaries
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+
+# Output of go build
+/build/
+/bin/
+/dist/
+*.log
+
+# Dependency directories (vendor/)
+vendor/
+
+# Go module cache (not needed in repo)
+/pkg/mod/
+/go.sum
+
+# IDEs and editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*.DS_Store
+
+# Logs and coverage
+*.log
+*.cover
+*.cov
+coverage.out
+
+# Env files
+.env
+.env.*
+
+# Test artifacts
+*.tmp
+*.local
+*.cache
+*.prof

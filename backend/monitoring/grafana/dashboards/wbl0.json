@@ -1,0 +1,27 @@
+{
+  "annotations": {"list":[]},
+  "editable": true,
+  "gnetId": null,
+  "graphTooltip": 0,
+  "panels": [
+    {
+      "type": "graph",
+      "title": "HTTP requests (total)",
+      "targets": [
+        {"expr": "http_requests_total", "legendFormat":"status={{status}}", "refId": "A"}
+      ],
+      "id": 1
+    },
+    {
+      "type": "graph",
+      "title": "HTTP request duration (histogram seconds)",
+      "targets": [
+        {"expr": "histogram_quantile(0.95, sum(rate(http_request_duration_seconds_bucket[5m])) by (le))", "refId": "A"}
+      ],
+      "id": 2
+    }
+  ],
+  "schemaVersion": 30,
+  "title": "wbl0",
+  "version": 1
+}

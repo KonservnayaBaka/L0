@@ -1,0 +1,30 @@
+#На реальном бы проекте я бы сделал env в пайплайне. Но для упрощения решил залить конфиг в репу (хотя это очень грубая ошибка)
+
+app:
+  level: prod # local, dev, prod
+
+server:
+  port: 8081
+  timeout: 5s
+
+database:
+  host: postgres
+  port: 5432
+  user: postgres
+  password: 1234
+  db_name: wbL0
+  ssl_mode: disable
+
+kafka:
+  brokers:
+    - kafka:9092
+  topic: orders
+  group_id: order-consumer
+  partition: 0
+
+redis:
+  host: redis
+  port: 6379
+  password: ""
+  db: 0
+  ttl: 720h
