@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS payment (
     currency VARCHAR(10) NOT NULL,
     provider VARCHAR(255) NOT NULL,
     amount INT NOT NULL,
-    payment_dt TIMESTAMP NOT NULL,
+    payment_dt INT NOT NULL,
     bank VARCHAR(255) NOT NULL,
     delivery_cost NUMERIC NOT NULL,
     goods_total NUMERIC NOT NULL,

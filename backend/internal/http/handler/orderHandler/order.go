@@ -78,7 +78,7 @@ func (h *OrderHandler) GetOrderInfo(c *gin.Context) {
 			Currency:     fo.Payment.Currency,
 			Provider:     fo.Payment.Provider,
 			Amount:       fo.Payment.Amount,
-			PaymentDt:    fo.Payment.PaymentDt.Unix(),
+			PaymentDt:    fo.Payment.PaymentDt,
 			Bank:         fo.Payment.Bank,
 			DeliveryCost: fo.Payment.DeliveryCost,
 			GoodsTotal:   fo.Payment.GoodsTotal,

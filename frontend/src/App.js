@@ -17,7 +17,7 @@ export default function OrderInfo() {
 
     setLoading(true);
     try {
-      const res = await fetch(`/order/${orderUID}`);
+      const res = await fetch(`http://localhost:8080/order/${orderUID}`);
       if (!res.ok) {
         const errData = await res.json();
         throw new Error(errData.error || "Failed to fetch order");
