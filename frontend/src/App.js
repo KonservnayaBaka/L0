@@ -18,11 +18,24 @@ export default function OrderInfo() {
     setLoading(true);
     try {
       const res = await fetch(`http://localhost:8081/order/${orderUID}`);
+
+      console.log("HTTP status:", res.status);
+      const text = await res.text();
+      console.log("Raw response text:", text);
+
       if (!res.ok) {
-        const errData = await res.json();
-        throw new Error(errData.error || "Failed to fetch order");
+        let errMsg;
+        try {
+          const errData = JSON.parse(text);
+          errMsg = errData.error || "Failed to fetch order";
+        } catch {
+          errMsg = text || "Failed to fetch order";
+        }
+        throw new Error(errMsg);
       }
-      const data = await res.json();
+
+      const data = JSON.parse(text);
+      console.log("Parsed data:", data);
       setOrderData(data);
     } catch (e) {
       setError(e.message);
@@ -51,35 +64,41 @@ export default function OrderInfo() {
 
         {orderData && (
             <div style={{ marginTop: 20, border: "1px solid #ccc", padding: 15, borderRadius: 5 }}>
-              <h2>Order UID: {orderData.orderUID}</h2>
-              <p><strong>Track Number:</strong> {orderData.trackNumber}</p>
+              <h2>Order UID: {orderData.order_uid}</h2>
+              <p><strong>Track Number:</strong> {orderData.track_number}</p>
               <p><strong>Entry:</strong> {orderData.entry}</p>
               <p><strong>Locale:</strong> {orderData.locale}</p>
-              <p><strong>Customer ID:</strong> {orderData.customerID}</p>
+              <p><strong>Customer ID:</strong> {orderData.customer_id}</p>
+
               <h3>Delivery</h3>
-              <p>Name: {orderData.delivery.name}</p>
-              <p>Phone: {orderData.delivery.phone}</p>
-              <p>Zip: {orderData.delivery.zip}</p>
-              <p>City: {orderData.delivery.city}</p>
-              <p>Address: {orderData.delivery.address}</p>
-              <p>Region: {orderData.delivery.region}</p>
-              <p>Email: {orderData.delivery.email}</p>
+              <p>Name: {orderData.delivery?.name || "-"}</p>
+              <p>Phone: {orderData.delivery?.phone || "-"}</p>
+              <p>Zip: {orderData.delivery?.zip || "-"}</p>
+              <p>City: {orderData.delivery?.city || "-"}</p>
+              <p>Address: {orderData.delivery?.address || "-"}</p>
+              <p>Region: {orderData.delivery?.region || "-"}</p>
+              <p>Email: {orderData.delivery?.email || "-"}</p>
 
               <h3>Payment</h3>
-              <p>Transaction: {orderData.payment.transaction}</p>
-              <p>Amount: {orderData.payment.amount}</p>
-              <p>Currency: {orderData.payment.currency}</p>
-              <p>Provider: {orderData.payment.provider}</p>
-              <p>Payment Date: {new Date(orderData.payment.paymentDt * 1000).toLocaleString()}</p>
+              <p>Transaction: {orderData.payment?.transaction || "-"}</p>
+              <p>Amount: {orderData.payment?.amount || "-"}</p>
+              <p>Currency: {orderData.payment?.currency || "-"}</p>
+              <p>Provider: {orderData.payment?.provider || "-"}</p>
+              <p>
+                Payment Date:{" "}
+                {orderData.payment?.payment_dt
+                    ? new Date(orderData.payment.payment_dt * 1000).toLocaleString()
+                    : "-"}
+              </p>
 
               <h3>Items</h3>
               <ul>
-                {orderData.items.map((item) => (
-                    <li key={item.chrtID} style={{ marginBottom: 10 }}>
+                {orderData.items?.map((item) => (
+                    <li key={item.chrt_id} style={{ marginBottom: 10 }}>
                       <strong>{item.name}</strong> (Brand: {item.brand})<br />
-                      Price: {item.price}, Sale: {item.sale}, Size: {item.size}, Total Price: {item.totalPrice}
+                      Price: {item.price}, Sale: {item.sale}, Size: {item.size}, Total Price: {item.total_price}
                     </li>
-                ))}
+                )) || <p>No items</p>}
               </ul>
             </div>
         )}
