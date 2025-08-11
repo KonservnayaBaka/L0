@@ -32,11 +32,10 @@ import (
 func main() {
 	cfg := config.MustLoad()
 
-	rootCtx, cancel := context.WithCancel(context.Background())
-	defer cancel()
+	initContext := context.Background()
 
-	dbPool := postgres.MustLoad(rootCtx, cfg)
-	rdb := redisClient.NewRedisClient(rootCtx, cfg)
+	dbPool := postgres.MustLoad(initContext, cfg)
+	rdb := redisClient.NewRedisClient(initContext, cfg)
 
 	log := logger.SetupLogger(cfg.App.Level)
 
