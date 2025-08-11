@@ -7,8 +7,20 @@ run:
 
 .PHONY: swagger-ui
 swagger-ui:
-	@echo "Открытие Swagger UI в браузере..."
+	@echo "Открытие Swagger UI..."
 	open http://localhost:$(PORT)/swagger/index.html
+
+prometheus:
+	@echo "Открытие Prometheus..."
+	open http://localhost:9090
+
+grafana:
+	@echo "Открытие Grafana..."
+	open http://localhost:3000
+
+test:
+	@echo "Запуск go test"
+	@go test ./... -v
 
 .PHONY: help
 help:
